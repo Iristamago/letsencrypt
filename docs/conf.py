@@ -20,10 +20,16 @@ import sys
 import mock
 
 
+# http://docs.readthedocs.org/en/latest/theme.html#how-do-i-use-this-locally-and-on-read-the-docs
+# on_rtd is whether we are on readthedocs.org
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
 # http://docs.readthedocs.org/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
 # c.f. #262
 sys.modules.update(
     (mod_name, mock.MagicMock()) for mod_name in ['augeas', 'M2Crypto'])
+if on_rtd:
+    sys.modules['requests'] = mock.MagicMock()  # #344
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -129,9 +135,6 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-# http://docs.readthedocs.org/en/latest/theme.html#how-do-i-use-this-locally-and-on-read-the-docs
-# on_rtd is whether we are on readthedocs.org
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 if not on_rtd:  # only import and set the theme if we're building docs locally
     import sphinx_rtd_theme
     html_theme = 'sphinx_rtd_theme'

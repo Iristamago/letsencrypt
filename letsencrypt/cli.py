@@ -11,7 +11,11 @@ import sys
 import time
 import traceback
 
-import configargparse
+try:
+    import configargparse
+except ImportError:
+    configargparse = None
+
 import OpenSSL
 import zope.component
 import zope.interface.exceptions
@@ -637,11 +641,19 @@ class HelpfulArgumentParser(object):
         plugin_names = [name for name, _p in plugins.iteritems()]
         self.help_topics = self.HELP_TOPICS + plugin_names + [None]
         usage, short_usage = usage_strings(plugins)
-        self.parser = configargparse.ArgParser(
+
+        if configargparse is None:
+            parser_cls = argparse.ArgumentParser
+        else:
+            parser_cls = functools.partial(
+                configargparse.ArgParser,
+                args_for_setting_config_path=["-c", "--config"],
+                default_config_files=flag_default("config_files"))
+
+        self.parser = parser_cls(
             usage=short_usage,
             formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-            args_for_setting_config_path=["-c", "--config"],
-            default_config_files=flag_default("config_files"))
+        )
 
         # This is the only way to turn off overly verbose config flag documentation
         self.parser._add_config_file_help = False  # pylint: disable=protected-access

@@ -169,7 +169,9 @@ class IAuthenticator(IPlugin):
               Authenticator will never be able to perform (error).
 
         :rtype: :class:`list` of
-            :class:`acme.challenges.ChallengeResponse`
+            :class:`acme.challenges.ChallengeResponse`,
+            where responses are required to be returned in
+            the same order as corresponding input challenges
 
         :raises .PluginError: If challenges cannot be performed
 
@@ -438,6 +440,22 @@ class IDisplay(zope.interface.Interface):
 
         :raises errors.MissingCommandlineFlag: if called in non-interactive
             mode without a default set
+
+        """
+
+    def directory_select(self, message, default=None, cli_flag=None):
+        """Display a directory selection screen.
+
+        :param str message: prompt to give the user
+        :param default: the default value to return, if one exists, when
+            using the NoninteractiveDisplay
+        :param str cli_flag: option used to set this value with the CLI,
+            if one exists, to be included in error messages given by
+            NoninteractiveDisplay
+
+        :returns: tuple of the form (`code`, `string`) where
+            `code` - int display exit code
+            `string` - input entered by the user
 
         """
 

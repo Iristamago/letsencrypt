@@ -83,7 +83,7 @@ class SupportedChallengesValidatorTest(unittest.TestCase):
         self.assertRaises(argparse.ArgumentTypeError, self._call, "foo")
 
     def test_not_subset(self):
-        self.assertRaises(argparse.ArgumentTypeError, self._call, "dns")
+        self.assertRaises(argparse.ArgumentTypeError, self._call, "dns-01")
 
 
 class AuthenticatorTest(unittest.TestCase):

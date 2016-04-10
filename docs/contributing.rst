@@ -188,7 +188,7 @@ the ACME server. From the protocol, there are essentially two
 different types of challenges. Challenges that must be solved by
 individual plugins in order to satisfy domain validation (subclasses
 of `~.DVChallenge`, i.e. `~.challenges.TLSSNI01`,
-`~.challenges.HTTP01`, `~.challenges.DNS`) and continuity specific
+`~.challenges.HTTP01`, `~.challenges.DNS01`) and continuity specific
 challenges (subclasses of `~.ContinuityChallenge`,
 i.e. `~.challenges.RecoveryToken`, `~.challenges.RecoveryContact`,
 `~.challenges.ProofOfPossession`). Continuity challenges are

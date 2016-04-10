@@ -235,14 +235,10 @@ def gen_ss_cert(key, domains, not_before=None,
 def gen_pkey(bits):
     """Generate a private key.
 
-    >>> gen_pkey(1024)
-    <OpenSSL.crypto.PKey object at 0x...>
+    :param int bits: Bit size of the key.
+    :returns: Freshly generated private key.
+    :rtype: `OpenSSL.crypto.PKey`
 
-    Args:
-      bits: Bit size of the key.
-
-    Returns:
-      Freshly generated private key.
     """
     assert bits >= 1024  # XXX
     pkey = OpenSSL.crypto.PKey()
@@ -253,17 +249,13 @@ def gen_pkey(bits):
 def gen_csr(pkey, domains, sig_hash='sha256'):
     """Generate a CSR.
 
-    >>> crypto_util._pykopenssl_cert_or_req_san(
-    ...     gen_csr(gen_pkey(1024), [b'example.com', b'example.net']))
-    ['example.com', 'example.net']
+    :param OpenSSL.crypto.PKey pkey: Private key.
+    :param domains: List of domains included in the cert.
+    :param str sig_hash: Hash used to sign the CSR.
 
-    Args:
-      pkey: Private key.
-      domains: List of domains included in the cert.
-      sig_hash: Hash used to sign the CSR.
+    :returns: Generated CSR.
+    :rtype: `OpenSSL.crypto.X509Req`
 
-    Returns:
-      Generated CSR.
     """
     assert domains, 'Must provide one or more hostnames for the CSR.'
     req = OpenSSL.crypto.X509Req()

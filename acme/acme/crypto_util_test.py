@@ -126,5 +126,19 @@ class PyOpenSSLCertOrReqSANTest(unittest.TestCase):
                          self._get_idn_names())
 
 
+class TestGenCSR(unittest.TestCase):
+    """Tests for acme.crypto_util.gen_csr."""
+
+    def test_it(self):
+        from acme.crypto_util import gen_pkey
+        from acme.crypto_util import gen_csr
+        # pylint: disable=protected-access
+        from acme.crypto_util import _pyopenssl_cert_or_req_san
+
+        csr = gen_csr(gen_pkey(1024), [b'example.com', b'example.net'])
+        self.assertEqual(['example.com', 'example.net'],
+                         _pyopenssl_cert_or_req_san(csr))
+
+
 if __name__ == '__main__':
     unittest.main()  # pragma: no cover

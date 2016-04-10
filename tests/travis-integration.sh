@@ -17,3 +17,5 @@ cd $GOPATH/src/github.com/letsencrypt/boulder/
 # going to want to define a more robust interaction point between the boulder
 # and letsencrypt tests, but that will be better built off of this.
 python test/integration-test.py --letsencrypt
+
+python ${LETSENCRYPT_PATH?}/acme/tests/boulder_integration.py

@@ -31,10 +31,13 @@ logging.info('Auto-accepting TOS: %s', regr.terms_of_service)
 acme.agree_to_tos(regr)
 logging.debug(regr)
 
-authzr = acme.request_challenges(
-    identifier=messages.Identifier(typ=messages.IDENTIFIER_FQDN, value=DOMAIN),
-    new_authzr_uri=regr.new_authzr_uri)
+authzr = acme.request_domain_challenges(DOMAIN)
 logging.debug(authzr)
+
+# challb = find_suitable_challb(authzr)
+# response, validation = challb.response_and_validation(acme.key)
+# solve_challb(challb, validation)
+# acme.answer_challenge(challb, response)
 
 authzr, authzr_response = acme.poll(authzr)
 
@@ -45,4 +48,6 @@ try:
     acme.request_issuance(jose.util.ComparableX509(csr), (authzr,))
 except messages.Error as error:
     print ("This script is doomed to fail as no authorization "
-           "challenges are ever solved. Error from server: {0}".format(error))
+           "challenges are ever solved. Moreover, sent CSR was for "
+           "example.com rather than requested example1.com. Check "
+           "commented code in the script. Error from server: {0}".format(error))

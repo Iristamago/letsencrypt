@@ -1,6 +1,8 @@
 """Tests for acme.jose.interfaces."""
 import unittest
 
+from acme.jose import errors
+
 
 class JSONDeSerializableTest(unittest.TestCase):
     # pylint: disable=too-many-instance-attributes
@@ -85,6 +87,8 @@ class JSONDeSerializableTest(unittest.TestCase):
         self.assertTrue(isinstance(seq.y, self.Basic))
         self.assertEqual(seq.x.v, 'foo1')
         self.assertEqual(seq.y.v, 'foo2')
+        self.assertRaises(
+            errors.DeserializationError, self.Sequence.json_loads, '1x')
 
     def test_json_dumps(self):
         self.assertEqual('["foo1", "foo2"]', self.seq.json_dumps())

@@ -351,7 +351,8 @@ class TypedJSONObjectWithFieldsTest(unittest.TestCase):
                 return {'foo': self.foo}
 
         self.parent_cls = MockParentTypedJSONObjectWithFields
-        self.msg = MockTypedJSONObjectWithFields(foo='bar')
+        self.child_cls = MockTypedJSONObjectWithFields
+        self.msg = self.child_cls(foo='bar')
 
     def test_to_partial_json(self):
         self.assertEqual(self.msg.to_partial_json(), {
@@ -367,6 +368,8 @@ class TypedJSONObjectWithFieldsTest(unittest.TestCase):
     def test_from_json_dict_no_type_fails(self):
         self.assertRaises(
             errors.DeserializationError, self.parent_cls.from_json, {})
+        self.assertRaises(
+            errors.DeserializationError, self.child_cls.from_json, {})
 
     def test_from_json_unknown_type_fails(self):
         self.assertRaises(errors.UnrecognizedTypeError,

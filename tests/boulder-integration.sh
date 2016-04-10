@@ -8,6 +8,8 @@
 #
 # Note: this script is called by Boulder integration test suite!
 
+python ./acme/tests/boulder_integration.py
+
 . ./tests/integration/_common.sh
 export PATH="/usr/sbin:$PATH"  # /usr/sbin/nginx
 

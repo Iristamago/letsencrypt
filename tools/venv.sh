@@ -4,7 +4,7 @@
 export VENV_ARGS="--python python2"
 
 ./tools/_venv_common.sh \
-  -e acme[dev] \
+  -e acme[dev,dns] \
   -e .[dev,docs] \
   -e letsencrypt-apache \
   -e letsencrypt-nginx \

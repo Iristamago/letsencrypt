@@ -1,12 +1,16 @@
 """DNS Resolver for ACME client.
+
 Required only for local validation of 'dns-01' challenges.
+
 """
 import logging
 
 import dns.resolver
 import dns.exception
 
+
 logger = logging.getLogger(__name__)
+
 
 def txt_records_for_name(name):
     """Resolve the name and return the TXT records.

@@ -301,7 +301,7 @@ class ChallengeBody(ResourceBody):
        such as ``challb`` to distinguish instances of this class from
        ``achall``.
 
-    :ivar acme.challenges.Challenge: Wrapped challenge.
+    :ivar acme.challenges.Challenge chall: Wrapped challenge.
         Conveniently, all challenge fields are proxied, i.e. you can
         call ``challb.x`` to get ``challb.chall.x`` contents.
     :ivar acme.messages.Status status:

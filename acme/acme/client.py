@@ -347,7 +347,7 @@ class Client(object):  # pylint: disable=too-many-instance-attributes
             authorization) before `PollError` with non-empty ``waiting``
             is raised.
 
-        :returns: ``(cert, updated_authzrs)`` `tuple` where ``cert`` is
+        :returns: ``(certr, updated_authzrs)`` `tuple` where ``certr`` is
             the issued certificate (`.messages.CertificateResource`),
             and ``updated_authzrs`` is a `tuple` consisting of updated
             Authorization Resources (`.AuthorizationResource`) as

@@ -4,7 +4,7 @@
 # instance (see ./boulder-start.sh).
 #
 # Environment variables:
-#   SERVER: Passed as "letsencrypt --server" argument.
+#   SERVER: Passed as "certbot --server" argument.
 #
 # Note: this script is called by Boulder integration test suite!
 
@@ -23,7 +23,7 @@ else
 fi
 
 common_no_force_renew() {
-    letsencrypt_test_no_force_renew \
+    certbot_test_no_force_renew \
         --authenticator standalone \
         --installer null \
         "$@"
@@ -96,5 +96,5 @@ common revoke --cert-path "$root/conf/live/le2.wtf/cert.pem" \
 
 if type nginx;
 then
-    . ./letsencrypt-nginx/tests/boulder-integration.sh
+    . ./certbot-nginx/tests/boulder-integration.sh
 fi

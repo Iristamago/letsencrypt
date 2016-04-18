@@ -101,7 +101,7 @@ class _TokenChallenge(Challenge):
 class KeyAuthorizationChallengeResponse(ChallengeResponse):
     """Response to Challenges based on Key Authorization.
 
-    :param unicode key_authorization:
+    :ivar unicode key_authorization:
 
     """
     key_authorization = jose.Field("keyAuthorization")
@@ -216,7 +216,7 @@ class DNS01Response(KeyAuthorizationChallengeResponse):
 
         :param challenges.DNS01 chall: Corresponding challenge.
         :param unicode domain: Domain name being verified.
-        :param account_public_key: Public key for the key pair
+        :param JWK account_public_key: Public key for the key pair
             being authorized.
 
         :returns: ``True`` iff validation with the TXT records resolved from a
@@ -265,13 +265,14 @@ class DNS01(KeyAuthorizationChallenge):
         return jose.b64encode(hashlib.sha256(self.key_authorization(
             account_key).encode("utf-8")).digest()).decode()
 
-    def validation_domain_name(self, name):
+    @classmethod
+    def validation_domain_name(cls, name):
         """Domain name for TXT validation record.
 
         :param unicode name: Domain name being validated.
 
         """
-        return "{0}.{1}".format(self.LABEL, name)
+        return "{0}.{1}".format(cls.LABEL, name)
 
 
 @ChallengeResponse.register
